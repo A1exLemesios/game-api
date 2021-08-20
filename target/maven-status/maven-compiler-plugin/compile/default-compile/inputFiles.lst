@@ -1,0 +1,16 @@
+/app/src/main/java/game/api/Model/User.java
+/app/src/main/java/game/api/Restservices/RestResponseEntityExceptionHandler.java
+/app/src/main/java/game/api/Dao/TokenDao.java
+/app/src/main/java/game/api/Model/ValidatePalindromeRequest.java
+/app/src/main/java/game/api/Dao/LeaderBoardDao.java
+/app/src/main/java/game/api/Dao/UserDao.java
+/app/src/main/java/game/api/Restservices/ApplicationConstants.java
+/app/src/main/java/game/api/Model/LeaderBoardRecord.java
+/app/src/main/java/game/api/Restservices/WebServicesException.java
+/app/src/main/java/game/api/Restservices/AuthorizationFilter.java
+/app/src/main/java/game/api/Model/LoginResponse.java
+/app/src/main/java/game/api/Restservices/RestGameController.java
+/app/src/main/java/game/api/Model/LoginRequest.java
+/app/src/main/java/game/api/Restservices/RestServiceApplication.java
+/app/src/main/java/game/api/Model/LeaderBoardResponse.java
+/app/src/main/java/game/api/Model/PlayResponse.java

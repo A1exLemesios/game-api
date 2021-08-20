@@ -1,8 +1,2 @@
 username1
 pass1
-Alexandros
-123456
-Procopis
-112233
-Alexis
-112233
