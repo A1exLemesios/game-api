@@ -23,7 +23,7 @@ public class TokenDao {
 	public void saveToken(String token) throws Exception {
 		try
 		{
-			Path pathToFile = Paths.get("src\\main\\java\\game\\api\\Dao\\Token.txt");
+			Path pathToFile = Paths.get("src/main/java/game/api/Dao/Token.txt");
 			String filePath = pathToFile.toAbsolutePath().toString();
 			
 		    FileWriter fw = new FileWriter(filePath,true);
@@ -42,7 +42,7 @@ public class TokenDao {
 		List <String> tokensList = new ArrayList<String>();
 		
 		 try {
-			 Path pathToFile = Paths.get("src\\main\\java\\game\\api\\Dao\\Token.txt");
+			 Path pathToFile = Paths.get("src/main/java/game/api/Dao/Token.txt");
 			 String file = pathToFile.toAbsolutePath().toString();		
 		     BufferedReader reader = new BufferedReader(new FileReader(file));
 		     

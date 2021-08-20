@@ -1,4 +1,4 @@
-package game.api.restservices;
+package game.api.Restservices;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

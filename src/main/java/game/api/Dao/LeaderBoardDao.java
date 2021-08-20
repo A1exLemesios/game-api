@@ -17,7 +17,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import game.api.Model.LeaderBoardRecord;
-import game.api.restservices.ApplicationConstants;
+import game.api.Restservices.ApplicationConstants;
 
 @Repository
 public class LeaderBoardDao {
@@ -27,7 +27,7 @@ public class LeaderBoardDao {
 		 List<LeaderBoardRecord> res = new ArrayList<LeaderBoardRecord>();
 	
 		 try {
-			 Path pathToFile = Paths.get("src\\main\\java\\game\\api\\Dao\\LeaderBoardRecord.txt");
+			 Path pathToFile = Paths.get("src/main/java/game/api/Dao/LeaderBoardRecord.txt");
 			 String file = pathToFile.toAbsolutePath().toString();
 			
 		     BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -68,7 +68,7 @@ public class LeaderBoardDao {
 		 List<LeaderBoardRecord> res = new ArrayList<LeaderBoardRecord>();
 
 		 try {
-				 Path pathToFile = Paths.get("src\\main\\java\\game\\api\\Dao\\LeaderBoardRecord.txt");
+				 Path pathToFile = Paths.get("src/main/java/game/api/Dao/LeaderBoardRecord.txt");
 				 String filePath = pathToFile.toAbsolutePath().toString();
 				 ApplicationConstants applicationConstants = new ApplicationConstants();
 				 
@@ -107,7 +107,7 @@ public class LeaderBoardDao {
 	public void saveLeaderBoardRecord(LeaderBoardRecord leaderBoardRecord) throws Exception {
 		try
 		{
-			Path pathToFile = Paths.get("src\\main\\java\\game\\api\\Dao\\LeaderBoardRecord.txt");
+			Path pathToFile = Paths.get("src/main/java/game/api/Dao/LeaderBoardRecord.txt");
 			String filePath = pathToFile.toAbsolutePath().toString();
 			
 		    FileWriter fw = new FileWriter(filePath,true);

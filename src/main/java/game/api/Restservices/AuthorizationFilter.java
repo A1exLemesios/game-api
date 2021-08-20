@@ -1,4 +1,4 @@
-package game.api.restservices;
+package game.api.Restservices;
 
 import java.util.ArrayList;
 import java.util.Base64;

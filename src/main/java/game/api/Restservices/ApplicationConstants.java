@@ -1,4 +1,4 @@
-package game.api.restservices;
+package game.api.Restservices;
 
 
 public final class ApplicationConstants {

@@ -34,7 +34,7 @@ public class UserDao {
 
 		try
 		{
-			Path pathToFile = Paths.get("src\\main\\java\\game\\api\\Dao\\User.txt");
+			Path pathToFile = Paths.get("src/main/java/game/api/Dao/User.txt");
 			String filePath = pathToFile.toAbsolutePath().toString();
 			
 		    FileWriter fw = new FileWriter(filePath,true);
@@ -55,7 +55,7 @@ public class UserDao {
 
 	     User user = null;
 		 try {
-			 Path pathToFile = Paths.get("src\\main\\java\\game\\api\\Dao\\User.txt");
+			 Path pathToFile = Paths.get("src/main/java/game/api/Dao/User.txt");
 			 String file = pathToFile.toAbsolutePath().toString();
 			
 		     BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -85,7 +85,7 @@ public class UserDao {
 
 	     User user = null;
 		 try {
-			 Path pathToFile = Paths.get("src\\main\\java\\game\\api\\Dao\\User.txt");
+			 Path pathToFile = Paths.get("src/main/java/game/api/Dao/User.txt");
 			 String file = pathToFile.toAbsolutePath().toString();
 			
 		     BufferedReader reader = new BufferedReader(new FileReader(file));
