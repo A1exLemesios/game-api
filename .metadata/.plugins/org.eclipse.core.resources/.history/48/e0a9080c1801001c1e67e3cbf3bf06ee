@@ -1,0 +1,18 @@
+package com.example.restservice;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class AuthorizationFilter {
+
+	public boolean createToken (LoginRequest loginRequest) {
+		
+		return true;
+	}
+	
+	public boolean validateToken (String userId, String authorizationToken) {
+		
+		return true;
+	}
+	
+}

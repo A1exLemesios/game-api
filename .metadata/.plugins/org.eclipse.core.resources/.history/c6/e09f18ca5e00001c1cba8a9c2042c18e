@@ -1,0 +1,23 @@
+package com.example.restservice;
+
+
+public class LeaderBoardResponse {
+	
+
+	private List <LeaderBoard> leaderBoardList = new ArrayList<LeaderBoard>();
+
+	public LeaderBoardResponse(List<LeaderBoard> leaderBoardList) {
+		this.id = id;
+		this.content = content;
+	}
+
+	public long getId() {
+
+		return id;
+	}
+
+	public String getContent() {
+
+		return content;
+	}
+}

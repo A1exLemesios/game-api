@@ -1,0 +1,34 @@
+package com.example.restservice;
+
+import java.util.Date;
+
+public class LoginResponse {
+
+	private String authorizationToken;
+	private Date expiresIn;
+	
+	public LoginResponse(String authorizationToken, Date expiresIn) {
+		this.authorizationToken = authorizationToken;
+		this.expiresIn = expiresIn;
+	}
+
+	public String getAuthorizationToken() {
+
+		return authorizationToken;
+	}
+
+	public Date getExpiresIn() {
+
+		return expiresIn;
+	}
+	
+	public void setAuthorizationToken(String authorizationToken) {
+
+		this.authorizationToken = authorizationToken;
+	}
+
+	public void setExpiresIn(Date expiresIn) {
+
+		this.expiresIn = expiresIn;
+	}
+}

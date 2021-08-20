@@ -1,0 +1,11 @@
+package com.example.restservice;
+
+
+
+
+public class WebServicesException extends Exception {  
+    
+	public WebServicesException(String errorMessage) {  
+		super(errorMessage);  
+    }  
+}

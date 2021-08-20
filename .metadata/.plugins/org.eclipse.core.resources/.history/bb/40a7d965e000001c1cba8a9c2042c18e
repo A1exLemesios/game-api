@@ -1,0 +1,46 @@
+
+package game.api.Dao;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.springframework.stereotype.Repository;
+
+import game.api.Model.LoginRequest;
+
+@Repository
+public class UserDao {
+   
+	
+	
+	public boolean register(LoginRequest req) throws Exception {
+		boolean isValid = false;
+
+		
+
+		
+		try {
+			 Path pathToFile = Paths.get("src\\main\\java\\game\\api\\Dao\\User.txt");
+			 
+			Path test = pathToFile.toAbsolutePath();
+			
+			 
+			Files.lines(test).forEach(line -> {
+			    System.out.println(line);
+			})
+		} catch (Exception e) {
+			throw e;
+		}
+
+		
+		return isValid;
+	}
+	
+}

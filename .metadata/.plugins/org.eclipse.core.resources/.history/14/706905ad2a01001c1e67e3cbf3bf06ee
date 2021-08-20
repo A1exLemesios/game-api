@@ -1,0 +1,57 @@
+package game.api.restservices;
+
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import game.api.Dao.TokenDao;
+import game.api.Dao.UserDao;
+import game.api.Model.LoginRequest;
+
+@Component
+public class AuthorizationFilter {
+	
+	@Autowired
+	private TokenDao tokenDao;
+
+	public String createToken (LoginRequest loginRequest) throws Exception {
+		System.out.println("Create token called for player : " + loginRequest.getUserName());
+		ApplicationConstants applicationConstants = new ApplicationConstants();
+		
+		String signingKey = applicationConstants.SIGNING_KEY;
+		String token = null;
+		String tokenInput = signingKey + loginRequest.getPassWord() + loginRequest.getUserName();
+		
+		token = Base64.getEncoder().encodeToString(tokenInput.getBytes());
+		
+		try {
+			tokenDao.saveToken(token);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return token;
+	}
+	
+	public boolean validateToken (String userId, String authorizationToken) throws Exception {
+		System.out.println("Validate token called for player : " + userId);
+
+		ApplicationConstants applicationConstants = new ApplicationConstants();
+
+		List <String> tokensList = tokenDao.retrieveAllTokens();
+		boolean found = false;
+		
+		tokensList.forEach( line -> {
+			String token = line;
+			token = token.replace(applicationConstants.SIGNING_KEY, "");
+			
+			byte[] decodedBytes = Base64.getDecoder().decode(token);
+			String decodedString = new String(decodedBytes);
+		 });
+		return true;
+	}
+	
+}

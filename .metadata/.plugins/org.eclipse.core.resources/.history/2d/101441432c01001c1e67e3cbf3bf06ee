@@ -1,0 +1,91 @@
+
+package game.api.Dao;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
+import game.api.Model.LeaderBoardRecord;
+import game.api.Model.LoginRequest;
+
+@Repository
+public class UserDao {
+   
+	
+	
+	public void register(LoginRequest req) throws Exception {
+		try
+		{
+			Path pathToFile = Paths.get("src\\main\\java\\game\\api\\Dao\\User.txt");
+			String filePath = pathToFile.toAbsolutePath().toString();
+			
+		    FileWriter fw = new FileWriter(filePath,true);
+		    fw.write("\n");
+		    fw.write(req.getUserName() + "\n");
+		    fw.write(req.getPassWord());
+		    
+
+		    fw.close();
+		}
+		catch(IOException e) {
+		    System.err.println("Error while saving User in db");
+		}	
+		
+	}
+	
+	
+	public User getUser(String username) throws Exception {
+		 
+		
+	
+		 try {
+			 Path pathToFile = Paths.get("src\\main\\java\\game\\api\\Dao\\User.txt");
+			 String file = pathToFile.toAbsolutePath().toString();
+			
+		     BufferedReader reader = new BufferedReader(new FileReader(file));
+		     
+		     String user;
+		     String score;
+		     String palindromeText;
+
+		     while ((user = reader.readLine()) != null) {
+		    	 LeaderBoardRecord ldbr  = new LeaderBoardRecord();
+		    	 
+		    	 score = reader.readLine();
+		    	 palindromeText = reader.readLine();
+		    	 
+		    	 ldbr.setUserId(user);
+		    	 ldbr.setScore(score);
+		    	 ldbr.setPalindromeText(palindromeText);
+		    	 dbList.add(ldbr);
+		     }
+		     reader.close();
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		 dbList.forEach(leaderBoardRecord -> {
+			if (leaderBoardRecord.getUserId().equals(userId)) {
+				res.add(leaderBoardRecord);
+			}
+		 });
+		 
+		res.sort(Comparator.comparing(LeaderBoardRecord::getScore).reversed());
+
+		return res;
+	}
+	
+}

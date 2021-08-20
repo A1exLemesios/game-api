@@ -1,0 +1,101 @@
+
+package game.api.Dao;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
+import game.api.Model.LeaderBoardRecord;
+
+@Repository
+public class LeaderBoardDao {
+   
+	public List<LeaderBoardRecord> getPlayerLeaderBoard(String userId) throws Exception {
+		 List<LeaderBoardRecord> dbList = new ArrayList<LeaderBoardRecord>();
+		 List<LeaderBoardRecord> res = new ArrayList<LeaderBoardRecord>();
+
+		
+		 try {
+			 Path pathToFile = Paths.get("src\\main\\java\\game\\api\\Dao\\LeaderBoardRecord.txt");
+			 String test = pathToFile.toAbsolutePath().toString();
+			
+		     BufferedReader reader = new BufferedReader(new FileReader(test));
+		     
+		   //  String firstLine;
+		     String user;
+		     String score;
+		     String palindromeText;
+
+		     while ((user = reader.readLine()) != null) {
+		    	 LeaderBoardRecord ldbr  = new LeaderBoardRecord();
+		    	 
+		    	 score = reader.readLine();
+		    	 palindromeText = reader.readLine();
+		    	 
+		    	 ldbr.setUserId(user);
+		    	 ldbr.setScore(score);
+		    	 ldbr.setPalindromeText(palindromeText);
+		    	 res.add(ldbr);
+		     }
+		     reader.close();
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		 dbList.forEach(LeaderBoardRecord -> {
+			if (LeaderBoardRecord.getUserId().equals(userId)) {
+				res.add(LeaderBoardRecord);
+			}
+		 });
+		 
+		res.sort(Comparator.comparing(LeaderBoardRecord::getScore).reversed());
+
+		return res;
+	}
+	
+	public List<LeaderBoardRecord> getLeaderBoardForAllPlayers() throws Exception {
+		 List<LeaderBoardRecord> res = new ArrayList<LeaderBoardRecord>();
+
+		 try {
+				 Path pathToFile = Paths.get("src\\main\\java\\game\\api\\Dao\\LeaderBoardRecord.txt");
+				 String test = pathToFile.toAbsolutePath().toString();
+				
+			     BufferedReader reader = new BufferedReader(new FileReader(test));
+			     
+			   //  String firstLine;
+			     String userId;
+			     String score;
+			     String palindromeText;
+
+			     while ((userId = reader.readLine()) != null) {
+			    	 LeaderBoardRecord ldbr  = new LeaderBoardRecord();
+			    	 
+			    	 score = reader.readLine();
+			    	 palindromeText = reader.readLine();
+			    	 
+			    	 ldbr.setUserId(userId);
+			    	 ldbr.setScore(score);
+			    	 ldbr.setPalindromeText(palindromeText);
+			    	 res.add(ldbr);
+			     }
+			     reader.close();
+			} catch (Exception e) {
+				throw e;
+			}
+			
+	
+			res.sort(Comparator.comparing(LeaderBoardRecord::getScore).reversed());
+			
+		return res;
+	}
+	
+}

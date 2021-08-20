@@ -1,0 +1,12 @@
+package com.example.restservice;
+
+
+public final class ApplicationConstants {
+    public final double SCORE_VARIANT = 3.1527414651;
+
+    
+    
+    public ApplicationConstants() {
+        
+    }
+}

@@ -1,0 +1,13 @@
+package com.example.restservice;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class RESTServicesException {
+
+	public boolean validateToken (LoginRequest loginRequest) {
+		
+		return true;
+	}
+	
+}

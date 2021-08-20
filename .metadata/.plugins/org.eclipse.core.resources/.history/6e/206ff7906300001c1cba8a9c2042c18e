@@ -1,0 +1,20 @@
+package com.example.restservice.Model;
+
+public class PlayResponse {
+
+	public enum GameResultStatus {
+	    WIN,
+	    LOSS, 
+	    INVALID_INPUT; 
+	}	
+	private String score;
+
+	public String getScore() {
+		return score;
+	}
+
+	public void setScore(String score) {
+		this.score = score;
+	}
+
+}

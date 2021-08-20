@@ -1,0 +1,179 @@
+package game.api.restservices;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
+import org.apache.catalina.connector.Response;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
+import game.api.Dao.LeaderBoardDao;
+import game.api.Dao.UserDao;
+import game.api.Model.LeaderBoardRecord;
+import game.api.Model.LeaderBoardResponse;
+import game.api.Model.LoginRequest;
+import game.api.Model.LoginResponse;
+import game.api.Model.PlayResponse;
+import game.api.Model.PlayResponse.GameResultStatus;
+import game.api.Model.ValidatePalindromeRequest;
+import jdk.internal.org.jline.utils.Log;
+
+@RestController
+public class RestGameController {
+
+	
+	@Autowired
+	private UserDao userDao;
+	
+	@Autowired
+	private LeaderBoardDao leaderBoardDao;
+	
+	@Autowired
+	private AuthorizationFilter authorizationFilter;
+
+	@PostMapping("/game/palindrome")
+	public PlayResponse play(
+		@RequestHeader(name = "authorizationToken", required = true) String token ,
+		@RequestHeader(name = "userId", required = true) String userId ,
+		@RequestBody ValidatePalindromeRequest requestBody
+	) throws ResponseStatusException {
+		
+		String palindromeText = requestBody.getPalindromeText();
+		System.out.println("User : " + userId + "is playing with word / phrase :" + palindromeText );
+		PlayResponse playRes = new PlayResponse();
+		if (palindromeText == null || palindromeText.equals("")) {	
+			  throw new ResponseStatusException(
+			           HttpStatus.BAD_REQUEST, "Palindrome text must not be empty");
+		
+		}
+		ApplicationConstants applicationConsts = new ApplicationConstants();
+		String reverse = 
+	    	       new StringBuilder(palindromeText)
+	    	       .reverse()
+	    	       .toString();
+
+		if (reverse.equals(palindromeText)) {
+			palindromeText = palindromeText.replaceAll("[^A-Za-z]+", "");
+			playRes.setScore( (new StringBuilder().append(palindromeText.length() * applicationConsts.SCORE_VARIANT)).toString());
+			playRes.setGameResult(GameResultStatus.WIN);
+			
+			try {
+				LeaderBoardRecord leaderBoardRecord = new LeaderBoardRecord();
+				
+				leaderBoardRecord.setUserId(userId);
+				leaderBoardRecord.setScore(playRes.getScore());
+				leaderBoardRecord.setPalindromeText(palindromeText);
+				
+				leaderBoardDao.saveLeaderBoardRecord(leaderBoardRecord);
+			} catch (Exception e) {
+				 throw new ResponseStatusException(
+				           HttpStatus.INTERNAL_SERVER_ERROR, "Error while saving leaderBoard Record in db");
+			}
+		} else if (reverse.equals(palindromeText)) {
+			playRes.setScore("0");
+			playRes.setGameResult(GameResultStatus.LOSS);
+		}
+		return  playRes;
+	}
+	
+	@PostMapping("/auth/token")
+	public LoginResponse validateToken(
+			@RequestBody LoginRequest requestBody
+	) throws Exception {
+		LoginResponse res = null;
+
+		authorizationFilter.createToken(requestBody);
+		
+		
+		return res;
+	}
+	
+	@PostMapping("/register")
+	public LoginResponse login(
+			@RequestBody LoginRequest requestBody
+	) throws Exception {
+		if (requestBody.getUserName() == null || requestBody.getUserName().equals("")) {
+			 throw new ResponseStatusException(
+			           HttpStatus.BAD_REQUEST, "Username is mandatory");	
+		}
+		if (requestBody.getPassWord() == null || requestBody.getPassWord().equals("")) {
+			 throw new ResponseStatusException(
+			           HttpStatus.BAD_REQUEST, "Password is mandatory");	
+		}
+		System.out.println("Register  API called for player :  " + requestBody.getUserName());
+
+		LoginResponse res = null;
+		
+		try {
+			userDao.register(requestBody);		
+			authorizationFilter.createToken(requestBody);
+
+		} catch (Exception e) {
+			 throw new ResponseStatusException(
+			           HttpStatus.INTERNAL_SERVER_ERROR, "Error during registration");
+		}
+		
+		return res;
+	}
+	
+	
+	@GetMapping("/leaderBoard/player")
+	public LeaderBoardResponse getPlayerBoard(
+			@RequestHeader(name = "authorizationToken", required = true) String token ,
+			@RequestHeader(name = "userId", required = true) String userId 
+	) throws Exception {
+		System.out.println("Get leaderBoard called for player : " + userId);
+		authorizationFilter.validateToken(userId, token);
+
+		LeaderBoardResponse res = new LeaderBoardResponse();
+		List <LeaderBoardRecord> playerBoardRecordList = new ArrayList<LeaderBoardRecord>();
+		try {
+			playerBoardRecordList = leaderBoardDao.getPlayerLeaderBoard(userId);
+		} catch (Exception e) {
+			 throw new ResponseStatusException(
+			           HttpStatus.INTERNAL_SERVER_ERROR, "Error while reading from db ");	
+		}
+		
+		
+		res.setLeaderBoardList(playerBoardRecordList);
+		
+		return res;
+	}
+	
+	@GetMapping("/leaderBoard/all")
+	public LeaderBoardResponse getLeaderBoardForAllPlayers(
+			@RequestHeader(name = "authorizationToken", required = true) String token ,
+			@RequestHeader(name = "userId", required = true) String userId 
+	) throws Exception {
+		System.out.println("Get leaderBoard called for all players by player : " + userId);
+		authorizationFilter.validateToken(userId, token);
+
+		LeaderBoardResponse res = new LeaderBoardResponse();
+		List <LeaderBoardRecord> playerBoardRecordList = new ArrayList<LeaderBoardRecord>();
+		try {
+			playerBoardRecordList = leaderBoardDao.getLeaderBoardForAllPlayers();	
+		} catch (Exception e) {
+			 throw new ResponseStatusException(
+			           HttpStatus.INTERNAL_SERVER_ERROR, "Error while reading from db ");	
+		}
+		
+		
+		res.setLeaderBoardList(playerBoardRecordList);
+		
+		return res;
+	}
+	
+}

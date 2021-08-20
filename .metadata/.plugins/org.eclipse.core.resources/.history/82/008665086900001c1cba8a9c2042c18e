@@ -1,0 +1,42 @@
+
+package game.api.Model;
+@Entity
+public class LoginRequest {
+
+	private String userName;
+	private String passWord;
+	
+	public LoginRequest(String userName, String passWord) {
+		this.userName = userName;
+		this.passWord = passWord;
+	}
+
+	public String getUserName() {
+
+		return userName;
+	}
+
+	public String getPassWord() {
+
+		return passWord;
+	}
+}
+
+
+
+//
+//public class User {
+//    
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    private long id;
+//    
+//    @NotBlank(message = "Name is mandatory")
+//    private String name;
+//    
+//    @NotBlank(message = "Email is mandatory")
+//    private String email;
+//    
+//    // standard constructors / setters / getters / toString
+//        
+//}
