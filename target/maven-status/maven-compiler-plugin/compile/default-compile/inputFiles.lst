@@ -5,6 +5,7 @@
 /app/src/main/java/game/api/Dao/LeaderBoardDao.java
 /app/src/main/java/game/api/Dao/UserDao.java
 /app/src/main/java/game/api/Restservices/ApplicationConstants.java
+/app/src/main/java/game/api/Model/Token.java
 /app/src/main/java/game/api/Model/LeaderBoardRecord.java
 /app/src/main/java/game/api/Restservices/WebServicesException.java
 /app/src/main/java/game/api/Restservices/AuthorizationFilter.java
