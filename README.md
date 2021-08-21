@@ -7,9 +7,7 @@ game-api is a REST web server , accomodating the palindrome game .Services inclu
 
 ```bash
 cd /projectLocation
-```
-- If you are using MacOs , remove 'dos2unix mvnw' from command in docker-compose.yml file
- 
+``` 
 - Type :
 ```bash
 docker-compose up
