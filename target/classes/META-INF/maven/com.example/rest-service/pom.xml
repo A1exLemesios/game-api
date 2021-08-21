@@ -41,6 +41,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>game.api.Restservices.RestServiceApplication</mainClass>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

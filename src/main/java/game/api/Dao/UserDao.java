@@ -32,8 +32,7 @@ public class UserDao {
 	public void register(LoginRequest req) throws Exception {
 		System.out.println("Registering  user  :  " + req.getUserName() + " " + req.getPassWord());
 
-		try
-		{
+		try {
 			Path pathToFile = Paths.get("src/main/java/game/api/Dao/User.txt");
 			String filePath = pathToFile.toAbsolutePath().toString();
 			
@@ -46,6 +45,7 @@ public class UserDao {
 		}
 		catch(IOException e) {
 		    System.err.println("Error while saving User in db");
+		    throw e;
 		}	
 		
 	}
