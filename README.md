@@ -54,5 +54,9 @@ Sample Curls for the APIs :
   --header 'username: username'
 ```
 
+## Further reading
+- Note that the user registry forces no duplications on usernames, so only one user can exist with a username
+- The validity of the token is heavily dependend on that assumption
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
