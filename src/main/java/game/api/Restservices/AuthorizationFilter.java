@@ -68,18 +68,12 @@ public class AuthorizationFilter {
 			 throw new ResponseStatusException(
 			           HttpStatus.UNAUTHORIZED, "User not found");	
 		}
-		for(String token : tokensList) {
-			String temp = token;
-			
-			byte[] decodedBytes = Base64.getDecoder().decode(temp);
-			String decodedString = new String(decodedBytes);
-			decodedString = decodedString.replace(applicationConstants.SIGNING_KEY, "");
-			if ((user.getPassword() + user.getUsername()).equals(decodedString)) {
-			valid = true;
-			
-			return valid;	
+		for(String token : tokensList) {		
+			if (token.equals(authorizationToken)) {
+				valid = true;
+				
+				return valid;		
 			}
-
 		}
 		if (!valid) {
 			 throw new ResponseStatusException(
@@ -92,10 +86,10 @@ public class AuthorizationFilter {
 	public void registerUser(LoginRequest request) throws Exception {
 		System.out.println("Register user called for player : " + request.getUserName());
 
-		User user = userDao.getUserByUsernameAndPassword(request.getUserName(), request.getPassWord());
+		User user = userDao.getUser(request.getUserName());
 		if (user != null) {
 			 throw new ResponseStatusException(
-			           HttpStatus.UNAUTHORIZED, "User already registered. Please aquire a token");	
+			           HttpStatus.UNAUTHORIZED, "User with the same username already exists. Please choose another username");	
 		}
 		
 		userDao.register(request);
