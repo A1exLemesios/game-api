@@ -1,6 +1,6 @@
 # game-api
 
-game-api is a REST web server , accomodating the palindrome game .Services include user registration , utilites for creating and validating JWT tokens , as well as the Play and retrieve leaderboards functionality .  
+game-api is a REST web server , accomodating the palindrome game .Services include user registry , utilites for creating and validating JWT tokens , as well as the Play and retrieve leaderboards functionality .  
 
 ## Installation
 - Clone the repository , and cd to the project location :
