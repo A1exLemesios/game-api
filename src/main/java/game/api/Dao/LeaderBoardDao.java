@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -53,19 +54,20 @@ public class LeaderBoardDao {
 			throw e;
 		}
 		
-		 dbList.forEach(leaderBoardRecord -> {
-			if (leaderBoardRecord.getUserId().equals(userId)) {
-				res.add(leaderBoardRecord);
-			}
-		 });
-		 
-		res.sort(Comparator.comparing(LeaderBoardRecord::getScore).reversed());
 
+		 for (LeaderBoardRecord leaddboardRec : dbList) {
+			 if (leaddboardRec.getUserId().equals(userId)) {
+				 leaddboardRec.setScoreInt(Integer.parseInt(leaddboardRec.getScore()));
+				res.add(leaddboardRec); 
+			 }
+		 }
+		 
+			res.sort(Comparator.comparing(LeaderBoardRecord::getScoreInt).reversed());
 		return res;
 	}
 	
 	public List<LeaderBoardRecord> getLeaderBoardForAllPlayers() throws Exception {
-		 List<LeaderBoardRecord> res = new ArrayList<LeaderBoardRecord>();
+		 List<LeaderBoardRecord> dbList = new ArrayList<LeaderBoardRecord>();
 
 		 try {
 				 Path pathToFile = Paths.get("src/main/java/game/api/Dao/LeaderBoardRecord.txt");
@@ -88,7 +90,7 @@ public class LeaderBoardDao {
 			    	 ldbr.setUserId(userId);
 			    	 ldbr.setScore(score);
 			    	 ldbr.setPalindromeText(palindromeText);
-			    	 res.add(ldbr);
+			    	 dbList.add(ldbr);
 			    	 counter ++;
 			    	 if (counter == applicationConstants.LEADER_BOARD_PAGE_SIZE) {
 			 			break;
@@ -99,7 +101,14 @@ public class LeaderBoardDao {
 			    System.err.println("Error while retrieving leaderBoard from db");
 				throw e;
 			}
-			res.sort(Comparator.comparing(LeaderBoardRecord::getScore).reversed());
+		 List<LeaderBoardRecord> res = new ArrayList<LeaderBoardRecord>();
+
+		 	for (LeaderBoardRecord ldbr : dbList) {
+		 		ldbr.setScoreInt(Integer.parseInt(ldbr.getScore()));
+		 		res.add(ldbr);
+		 		
+		 	}
+			res.sort(Comparator.comparing(LeaderBoardRecord::getScoreInt).reversed());
 			
 		return res;
 	}
@@ -111,10 +120,12 @@ public class LeaderBoardDao {
 			String filePath = pathToFile.toAbsolutePath().toString();
 			
 		    FileWriter fw = new FileWriter(filePath,true);
+		    fw.write(leaderBoardRecord.getUserId());
 		    fw.write("\n");
-		    fw.write(leaderBoardRecord.getUserId() + "\n");
-		    fw.write(leaderBoardRecord.getScore() + "\n");
+		    fw.write(leaderBoardRecord.getScore());
+		    fw.write("\n");
 		    fw.write(leaderBoardRecord.getPalindromeText());
+		    fw.write("\n");
 
 		    fw.close();
 		}

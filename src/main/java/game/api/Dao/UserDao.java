@@ -37,9 +37,10 @@ public class UserDao {
 			String filePath = pathToFile.toAbsolutePath().toString();
 			
 		    FileWriter fw = new FileWriter(filePath,true);
+		    fw.write(req.getUserName());
 		    fw.write("\n");
-		    fw.write(req.getUserName() + "\n");
 		    fw.write(req.getPassWord());
+		    fw.write("\n");
 		    
 		    fw.close();
 		}

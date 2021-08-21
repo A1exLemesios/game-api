@@ -81,7 +81,7 @@ public class RestGameController {
 	}
 	
 	@PostMapping("/auth/token")
-	public LoginResponse validateToken(
+	public LoginResponse createToken(
 			@RequestBody LoginRequest requestBody
 	) throws Exception {
 		if (requestBody.getUserName() == null || requestBody.getUserName().equals("")) {
@@ -91,6 +91,10 @@ public class RestGameController {
 		if (requestBody.getPassWord() == null || requestBody.getPassWord().equals("")) {
 			 throw new ResponseStatusException(
 			           HttpStatus.BAD_REQUEST, "Password is mandatory");	
+		}
+		if (requestBody.getSignKey() == null || requestBody.getSignKey().equals("")) {
+			 throw new ResponseStatusException(
+			           HttpStatus.BAD_REQUEST, "Signing key is mandatory");	
 		}
 		LoginResponse res = new LoginResponse();
 		String token = authorizationFilter.createToken(requestBody);
