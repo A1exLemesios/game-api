@@ -30,8 +30,9 @@ Sample Curls for the APIs :
   curl --location --request POST 'localhost:8080/auth/token' \
   --header 'Content-Type: application/json' \
   --data-raw '{
-  "passWord": "password",
-  "userName":"username"
+  "passWord": "123456",
+  "userName":"4th",
+  "signKey":"SIGNING_KEY"
   }'
   
 #  Play
