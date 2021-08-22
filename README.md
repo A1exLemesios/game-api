@@ -25,14 +25,13 @@ Sample Curls for the APIs :
   "passWord": "password",
   "userName":"username"
   }'
-
-#  Get authorization token
-  curl --location --request POST 'localhost:8080/auth/token' \
-  --header 'Content-Type: application/json' \
-  --data-raw '{
-  "passWord": "123456",
-  "userName":"4th"
-  }'
+# Create token
+    curl --location --request POST 'localhost:8080/auth/token' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+    "passWord": "123456",
+    "userName":"4th"
+    }'
   
 #  Play
   curl --location --request POST 'localhost:8080/game/palindrome' \
