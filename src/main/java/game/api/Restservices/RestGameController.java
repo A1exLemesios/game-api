@@ -92,10 +92,7 @@ public class RestGameController {
 			 throw new ResponseStatusException(
 			           HttpStatus.BAD_REQUEST, "Password is mandatory");	
 		}
-		if (requestBody.getSignKey() == null || requestBody.getSignKey().equals("")) {
-			 throw new ResponseStatusException(
-			           HttpStatus.BAD_REQUEST, "Signing key is mandatory");	
-		}
+
 		LoginResponse res = new LoginResponse();
 		String token = authorizationFilter.createToken(requestBody);
 

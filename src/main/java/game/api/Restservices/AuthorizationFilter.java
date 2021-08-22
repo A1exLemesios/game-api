@@ -44,22 +44,17 @@ public class AuthorizationFilter {
 		String token = null;
 		String signingKey = applicationConstants.SIGNING_KEY;
 		String issuer = UUID.randomUUID().toString();
-		if (loginRequest.getSignKey().equals(signingKey)) {
-			
-			try {
-			    Algorithm algorithm = Algorithm.HMAC256(signingKey);
-			    token = JWT.create()
-			        .withIssuer(issuer)
-			        .sign(algorithm);
-			} catch (JWTCreationException exception){
-				 throw new ResponseStatusException(
-				           HttpStatus.UNAUTHORIZED, "Error while generating token");		
-			}
-		} else {
+
+		try {
+		    Algorithm algorithm = Algorithm.HMAC256(signingKey);
+		    token = JWT.create()
+		        .withIssuer(issuer)
+		        .sign(algorithm);
+		} catch (JWTCreationException exception){
 			 throw new ResponseStatusException(
-			           HttpStatus.UNAUTHORIZED, "The signing key is incorrect  . !");	
+			           HttpStatus.UNAUTHORIZED, "Error while generating token");		
 		}
-		
+
 		try {
 			Token tokenObj = new Token();
 			tokenObj.setIssuer(issuer);
