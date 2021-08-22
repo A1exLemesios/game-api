@@ -31,8 +31,7 @@ Sample Curls for the APIs :
   --header 'Content-Type: application/json' \
   --data-raw '{
   "passWord": "123456",
-  "userName":"4th",
-  "signKey":"SIGNING_KEY"
+  "userName":"4th"
   }'
   
 #  Play
